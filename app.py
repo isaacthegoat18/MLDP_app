@@ -56,12 +56,6 @@ section[data-testid="stSidebar"] {
     color: #fff;
 }
 
-[data-testid="stSidebar"][aria-expanded="false"] {
-    width: 0 !important;
-    transform: translateX(-100%);
-    overflow: hidden;
-}
-
 /* Main content area next to sidebar */
 [data-testid="stAppViewContainer"] > main {
     flex-grow: 1;
@@ -265,25 +259,6 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
 </style>
 """, unsafe_allow_html=True)
 
-if "sidebar_visible" not in st.session_state:
-    st.session_state.sidebar_visible = True
-
-# Sidebar toggle button in main app
-toggle_label = "Hide Sidebar" if st.session_state.sidebar_visible else "Show Sidebar"
-if st.button(toggle_label):
-    st.session_state.sidebar_visible = not st.session_state.sidebar_visible
-
-# Show sidebar content conditionally
-if st.session_state.sidebar_visible:
-    with st.sidebar:
-        st.markdown("## Set Prediction Parameters")
-        # your sidebar widgets here
-        # example:
-        job_title = st.selectbox("Job Title", [...])
-        # ...rest of sidebar inputs...
-
-else:
-    st.write("Sidebar is hidden. Click **Show Sidebar** to open.")
 
 # Load your model and columns
 model = joblib.load("ai_salary_model.pkl")
