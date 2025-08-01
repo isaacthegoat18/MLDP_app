@@ -7,7 +7,7 @@ import time
 
 st.set_page_config(
     page_title="AI Job Salary Predictor",
-    layout="wide"
+    layout="wide",
     initial_sidebar_state="expanded"
 
 )
