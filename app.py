@@ -2,24 +2,26 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import joblib
-import time
+import time 
 
-# Set page config
+
 st.set_page_config(
     page_title="AI Job Salary Predictor",
-    layout="wide",
+    layout="wide", 
     initial_sidebar_state="expanded"
 )
 
-# Inject your full CSS styles here
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+
+
 /* Right side container */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
-    background-size: cover;         
+    background-size: cover;          
     border-radius: 1rem;
     margin: 0.4rem auto;
     padding: 0;
@@ -28,7 +30,8 @@ st.markdown("""
     flex-direction: column;
     min-height: calc(100vh - 4rem);
 }
-[data-testid="stAppViewContainer"]::before {
+            
+    [data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
     top: 0;
@@ -39,17 +42,34 @@ st.markdown("""
     background-color: rgba(0, 0, 0, 0.7); /* Adjust darkness */
     z-index: 0;
 }
-
+            
 @media (min-width: 768px) {
     [data-testid="stAppViewContainer"] {
         flex-direction: row;
     }
 }
 
+
+
+/* Main area */
+/*[data-testid="stAppViewContainer"] > .main {
+    padding: 0rem;
+    background-color: #2d3748;
+    border-radius: 0 0 1rem 1rem;
+}
+@media (min-width: 768px) {
+    [data-testid="stAppViewContainer"] > .main {
+        width: 55%;
+        border-radius: 0 1rem 1rem 0;
+    }
+}*/
+            
+
 /* Text and headers */
 h1, h2, h3, h4, h5, h6 {
     color: #0080ff;
 }
+
 
 /* Info box */
 .info-box {
@@ -60,8 +80,9 @@ h1, h2, h3, h4, h5, h6 {
     color: #cbd5e0;
 }
 .info-box p{
-    color:#fff;
+            color:#fff
 }
+
 .info-box h3 {
     margin-bottom: 1rem;
     color: #e2e8f0;
@@ -71,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 #MainMenu, footer, header {
     visibility: hidden;
 }
-
+            
 /* Mission Background */
 .mission-background {
     padding: 2px 4px;
@@ -143,6 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How It Works Section */
 .how-it-works-section {
+    
     padding: 2rem 1rem;
     color: white;
 }
@@ -174,6 +196,8 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
     border: 1px solid #e5e7eb;
 }
+            
+
 
 @media (min-width: 768px) {
     .step-card {
@@ -229,9 +253,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5rem;
 }
 
-.section-gap {
+ .section-gap {
     height: 1.5rem; 
-}   
+}         
 
 @media (max-width: 768px) {
     section[data-testid="stSidebar"] {
@@ -239,24 +263,22 @@ h1, h2, h3, h4, h5, h6 {
         max-height: 100vh;
         padding-right: 1rem;
     }
-}      
+}         
 </style>
 """, unsafe_allow_html=True)
 
 
-# Load model and columns
+
 model = joblib.load("ai_salary_model.pkl")
 model_columns = joblib.load("model_columns.pkl")
 
-# Title
 st.title("💰AI Job Salary Predictor")
 st.markdown("Use the sidebar to select the parameters for salary prediction. The predicted salary will appear below.")
 
-# Placeholder for results and loading spinner
 result_placeholder = st.empty()
+
 loading_placeholder = st.empty()
 
-# Sidebar inputs
 employment_options = {
     "Full-time": "FT",
     "Part-time": "PT",
@@ -274,14 +296,14 @@ experience_level_options = {
 with st.sidebar:
     st.markdown("## Set Prediction Parameters")
 
-    job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job")
+    job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") # Default to NLP Engineer
     
     employment_display = st.selectbox("Employment Type", list(employment_options.keys()),index=0,help='Select the employment type of the job')
     employment_type = employment_options[employment_display] 
     
-    company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company')
+    company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company') # Default to Switzerland
     
-    employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in')
+    employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in') # Default to India
     
     remote_ratio = st.slider("Remote Work Ratio (%)", 0, 100, value=0, step=50,help='Select how much does the company work remotely: 0 (No remote), 50 (Hybrid), 100 (Fully remote)') 
     
@@ -302,7 +324,8 @@ with st.sidebar:
 
     predict_button = st.button("Predict Salary")
 
-# Prediction logic
+# --- Prediction Logic ---
+# Number of employees
 if num_employees < 50:
     company_size = 'S'
 elif num_employees < 250:
@@ -311,11 +334,13 @@ else:
     company_size = 'L'
 
 if predict_button:
+    # Clear previous results and show loading spinner
     result_placeholder.empty()
     with loading_placeholder.container():
         st.spinner("Predicting salary...")
-        time.sleep(1.5)
+        time.sleep(1.5) # Simulate prediction time
 
+    # Input as DataFrame
     input_df = pd.DataFrame([{
         'job_title': job_title,
         'employment_type': employment_type,
@@ -346,18 +371,16 @@ if predict_button:
     loading_placeholder.empty()
     result_placeholder.success(f"Predicted Yearly AI job salary: ${predicted_salary:,.2f} USD")
 
-# Info box
 st.markdown("""
     <div class="info-box">
         <h3>How the Prediction Works (Model-Based)</h3>
         <p>This application uses a pre-trained machine learning model (<code>ai_salary_model.pkl</code>) to predict the salary based on the input features. The model processes the categorical inputs through ordinal and one-hot encoding to align them with its training data.</p>
         <p class="mt-2">This model has a deviation of $15,000 to $20,000 US Dollars</p>
     </div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
 st.markdown('<div class="section-gap"></div>', unsafe_allow_html=True)
 
-# Mission section
 st.markdown("""
 <div class="mission-background">
     <div class="mission-card-container mission-card-shape">
@@ -380,7 +403,7 @@ st.markdown("""
 
 st.markdown('<div class="section-gap"></div>', unsafe_allow_html=True)
 
-# How it works section
+
 st.markdown("""
 <div class="how-it-works-section">
     <h2 class="section-title">How It Works</h2>
@@ -390,7 +413,7 @@ st.markdown("""
             <img src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
             </div>
             <div class="step-content">
-                <div class="icon-wrapper">✏</div>
+                <div class="icon-wrapper">✏ </div>
                 <h3>Step 1: Set parameters</h3>
                 <p>Simply set the job's parameters on the left hand side of the screen to the job you are currently looking at</p>
             </div>
@@ -409,7 +432,6 @@ st.markdown("""
             </div>
         </div>
 """, unsafe_allow_html=True)
-
 st.markdown('<div class="section-gap"></div>', unsafe_allow_html=True)
 
 st.markdown("""
@@ -426,3 +448,5 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
+
+ 
