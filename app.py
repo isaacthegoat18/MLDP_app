@@ -11,36 +11,50 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
 st.markdown("""
 <style>
-/* Toggle Button */
+/* Toggle button styling */
 .sidebar-toggle {
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 10000;
-    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 10001;
+    background-color: rgba(255,255,255,0.8);
     border: none;
-    padding: 0.4rem 0.6rem;
-    font-size: 1.5rem;
-    border-radius: 0.5rem;
+    padding: 6px 10px;
+    font-size: 18px;
+    border-radius: 6px;
     cursor: pointer;
     backdrop-filter: blur(4px);
-    transition: background-color 0.3s ease;
-}
-.sidebar-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* Sidebar animation */
+/* Sidebar transition */
 section[data-testid="stSidebar"] {
-    transition: transform 0.3s ease-in-out;
+    transition: margin-left 0.3s ease-in-out;
 }
 section[data-testid="stSidebar"].collapsed {
-    transform: translateX(-100%);
+    margin-left: -300px;
 }
 </style>
+
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+    const btn = window.parent.document.createElement("button");
+    btn.innerHTML = "⇠";
+    btn.className = "sidebar-toggle";
+    btn.onclick = function() {
+        const sidebar = window.parent.document.querySelector('section[data-testid="stSidebar"]');
+        if (sidebar.classList.contains("collapsed")) {
+            sidebar.classList.remove("collapsed");
+        } else {
+            sidebar.classList.add("collapsed");
+        }
+    };
+    window.parent.document.body.appendChild(btn);
+});
+</script>
+""", unsafe_allow_html=True)
+
 
 <script>
 let sidebarVisible = true;
