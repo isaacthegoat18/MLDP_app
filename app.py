@@ -3,7 +3,91 @@ import numpy as np
 import pandas as pd
 import joblib
 import time 
+import streamlit.components.v1 as components
 
+components.html("""
+<style>
+#mobile-sidebar-btn {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10000;
+    background-color: rgba(30, 41, 59, 0.9);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 18px;
+    border-radius: 8px;
+    display: none;
+}
+
+/* Show button on small screens */
+@media (max-width: 768px) {
+    #mobile-sidebar-btn {
+        display: block;
+    }
+
+    section[data-testid="stSidebar"] {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    section[data-testid="stSidebar"].open {
+        transform: translateX(0);
+    }
+}
+
+.sidebar-close-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+</style>
+
+<button id="mobile-sidebar-btn">☰</button>
+
+<script>
+function waitForElement(selector, callback) {
+    const el = document.querySelector(selector);
+    if (el) return callback(el);
+    const observer = new MutationObserver(() => {
+        const el = document.querySelector(selector);
+        if (el) {
+            observer.disconnect();
+            callback(el);
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+waitForElement("section[data-testid='stSidebar']", (sidebar) => {
+    const toggleBtn = document.getElementById("mobile-sidebar-btn");
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.add("open");
+    });
+
+    // Add close button inside sidebar
+    const closeBtn = document.createElement("button");
+    closeBtn.innerText = "Close Sidebar";
+    closeBtn.className = "sidebar-close-btn";
+    closeBtn.onclick = () => sidebar.classList.remove("open");
+
+    if (!sidebar.querySelector(".sidebar-close-btn")) {
+        sidebar.insertBefore(closeBtn, sidebar.firstChild);
+    }
+});
+</script>
+""", height=0)
 
 st.set_page_config(
     page_title="AI Job Salary Predictor",
