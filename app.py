@@ -56,6 +56,12 @@ section[data-testid="stSidebar"] {
     color: #fff;
 }
 
+[data-testid="stSidebar"][aria-expanded="false"] {
+    width: 0 !important;
+    transform: translateX(-100%);
+    overflow: hidden;
+}
+
 /* Main content area next to sidebar */
 [data-testid="stAppViewContainer"] > main {
     flex-grow: 1;
