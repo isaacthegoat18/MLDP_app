@@ -257,8 +257,8 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     border-radius: 4px;
 }
 
+/* Sidebar styling and positioning for mobile */
 @media (max-width: 768px) {
-    /* Sidebar fixed on left, full height */
     section[data-testid="stSidebar"] {
         position: fixed !important;
         top: 0;
@@ -272,144 +272,119 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
         border-radius: 0 0.5rem 0.5rem 0;
         z-index: 20;
         box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+        transform: translateX(-320px); /* Hide by default on mobile */
+        transition: transform 0.3s ease;
+    }
+    /* Sidebar open state */
+    section[data-testid="stSidebar"][aria-expanded="true"] {
+        transform: translateX(0);
     }
 
-    /* Push main content to the right of sidebar */
+    /* Push main content to the right when sidebar is open */
     [data-testid="stAppViewContainer"] > main {
-        margin-left: 320px !important;
+        margin-left: 0 !important;
         padding: 1rem 1.25rem;
+        transition: margin-left 0.3s ease;
     }
 
-    /* Images: keep aspect ratio and prevent shrink */
-    .step-image img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
+    /* Show sidebar overlay */
+    #sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 15;
+    }
+    #sidebar-overlay.visible {
+        display: block;
+    }
+
+    /* Hamburger toggle button */
+    #sidebar-toggle-btn {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 25;
+        background-color: rgba(45, 55, 72, 0.95);
+        border: none;
         border-radius: 0.5rem;
+        color: white;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        transition: background-color 0.2s ease;
+    }
+    #sidebar-toggle-btn:hover {
+        background-color: #4f46e5;
     }
 
-    /* Boxes & cards: prevent overflow or squish */
-    .mission-card-container,
-    .step-card {
-        margin: 1rem auto;
-        padding: 1.25rem;
-        width: 95%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .mission-content h2,
-    .section-title {
-        font-size: 1.75rem;
-    }
-
-    .mission-content p,
-    .step-content p {
-        font-size: 1rem;
+    /* Close button inside sidebar */
+    #sidebar-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        font-size: 1.8rem;
+        color: white;
+        cursor: pointer;
+        user-select: none;
+        display: block;
     }
 }
 
-section[data-testid="stSidebar"] {
-    transition: transform 0.3s ease, width 0.3s ease;
-    width: 320px !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 20;
-    background-color: rgba(45, 55, 72, 0.95);
-    padding: 1rem 1.25rem;
-    border-radius: 0 0.5rem 0.5rem 0;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-    overflow-y: auto;
+/* Desktop styles: sidebar always visible and no toggle */
+@media (min-width: 769px) {
+    #sidebar-toggle-btn, #sidebar-close-btn, #sidebar-overlay {
+        display: none !important;
+    }
 }
-
-/* Sidebar collapsed: shrink + move out */
-section[data-testid="stSidebar"][aria-expanded="false"] {
-    width: 30px !important;
-    transform: translateX(-290px);
-    cursor: pointer;
-}
-
-/* Push content right when sidebar is open */
-[data-testid="stAppViewContainer"] > main {
-    margin-left: 320px;
-    transition: margin-left 0.3s ease;
-}
-
-/* Pull content back left when sidebar is closed */
-section[data-testid="stSidebar"][aria-expanded="false"] ~ div main {
-    margin-left: 30px !important;
-}
-
-/* Make sure images and boxes behave */
-.step-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 0.5rem;
-}
-
-.mission-card-container,
-.step-card {
-    margin: 1rem auto;
-    padding: 1.25rem;
-    width: 95%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-section[data-testid="stSidebar"] {
-    transition: transform 0.3s ease, width 0.3s ease;
-    width: 320px !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 20;
-    background-color: rgba(45, 55, 72, 0.95);
-    padding: 1rem 1.25rem;
-    border-radius: 0 0.5rem 0.5rem 0;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-    overflow-y: auto;
-}
-
-/* Sidebar collapsed: shrink + move out */
-section[data-testid="stSidebar"][aria-expanded="false"] {
-    width: 40px !important;
-    transform: translateX(-290px);
-    cursor: pointer;
-}
-
-/* Push content right when sidebar is open */
-[data-testid="stAppViewContainer"] > main {
-    margin-left: 320px;
-    transition: margin-left 0.3s ease;
-}
-
-/* Pull content back left when sidebar is closed */
-section[data-testid="stSidebar"][aria-expanded="false"] ~ div main {
-    margin-left: 30px !important;
-}
-
-/* Make sure images and boxes behave */
-.step-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 0.5rem;
-}
-
-.mission-card-container,
-.step-card {
-    margin: 1rem auto;
-    padding: 1.25rem;
-    width: 95%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
 </style>
+
+<!-- Sidebar toggle button (hamburger) -->
+<button id="sidebar-toggle-btn" aria-label="Open sidebar">&#9776;</button>
+
+<!-- Sidebar overlay -->
+<div id="sidebar-overlay"></div>
+
+<script>
+const sidebar = document.querySelector('section[data-testid="stSidebar"]');
+const toggleBtn = document.getElementById('sidebar-toggle-btn');
+const overlay = document.getElementById('sidebar-overlay');
+
+// Create close button inside sidebar if not exists
+let closeBtn = document.getElementById('sidebar-close-btn');
+if (!closeBtn) {
+    closeBtn = document.createElement('button');
+    closeBtn.id = 'sidebar-close-btn';
+    closeBtn.innerHTML = '&times;';
+    sidebar.prepend(closeBtn);
+}
+
+function openSidebar() {
+    sidebar.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('visible');
+}
+
+function closeSidebar() {
+    sidebar.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove('visible');
+}
+
+// Start sidebar closed on mobile
+sidebar.setAttribute('aria-expanded', 'false');
+
+toggleBtn.addEventListener('click', openSidebar);
+closeBtn.addEventListener('click', closeSidebar);
+overlay.addEventListener('click', closeSidebar);
+</script>
 """, unsafe_allow_html=True)
 
 
@@ -588,3 +563,4 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
+
