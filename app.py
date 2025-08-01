@@ -11,28 +11,55 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 st.markdown("""
+<style>
+/* Toggle Button */
+.sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10000;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 0.4rem 0.6rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s ease;
+}
+.sidebar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Sidebar animation */
+section[data-testid="stSidebar"] {
+    transition: transform 0.3s ease-in-out;
+}
+section[data-testid="stSidebar"].collapsed {
+    transform: translateX(-100%);
+}
+</style>
+
 <script>
-function toggleSidebar(show) {
-    const sidebar = document.querySelector('section[data-testid="stSidebar"]');
+let sidebarVisible = true;
+function toggleSidebar() {
+    const sidebar = window.parent.document.querySelector('section[data-testid="stSidebar"]');
     if (sidebar) {
-        if (show) {
-            sidebar.classList.add("show");
-            const overlay = document.createElement("div");
-            overlay.classList.add("sidebar-overlay");
-            overlay.setAttribute("onclick", "toggleSidebar(false)");
-            document.body.appendChild(overlay);
+        sidebarVisible = !sidebarVisible;
+        if (sidebarVisible) {
+            sidebar.classList.remove('collapsed');
         } else {
-            sidebar.classList.remove("show");
-            const overlay = document.querySelector(".sidebar-overlay");
-            if (overlay) document.body.removeChild(overlay);
+            sidebar.classList.add('collapsed');
         }
     }
 }
 </script>
 
-<button class="sidebar-toggle" onclick="toggleSidebar(true)">☰</button>
+<button class="sidebar-toggle" onclick="toggleSidebar()">⇠</button>
 """, unsafe_allow_html=True)
+
 
 
 st.markdown("""
@@ -281,62 +308,6 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
-
-@media (max-width: 768px) {
-    /* Hide sidebar by default */
-    section[data-testid="stSidebar"] {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        z-index: 9999;
-    }
-
-    /* Show when active */
-    section[data-testid="stSidebar"].show {
-        transform: translateX(0);
-    }
-
-    /* Overlay for background */
-    .sidebar-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 9998;
-    }
-
-    /* Toggle open button */
-    .sidebar-toggle {
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
-        z-index: 10000;
-        background-color: rgba(255, 255, 255, 0.8);
-        border: none;
-        padding: 0.5rem 0.75rem;
-        font-size: 1.25rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        backdrop-filter: blur(4px);
-    }
-
-    /* Close button inside sidebar */
-    .sidebar-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 1.5rem;
-        color: white;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -366,7 +337,6 @@ experience_level_options = {
 }
 
 with st.sidebar:
-    st.markdown('<button class="sidebar-close" onclick="toggleSidebar(false)">✕</button>', unsafe_allow_html=True)
     st.markdown("## Set Prediction Parameters")
 
     job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") # Default to NLP Engineer
