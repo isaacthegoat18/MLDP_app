@@ -359,6 +359,56 @@ section[data-testid="stSidebar"][aria-expanded="false"] ~ div main {
     box-sizing: border-box;
 }
 
+section[data-testid="stSidebar"] {
+    transition: transform 0.3s ease, width 0.3s ease;
+    width: 320px !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(45, 55, 72, 0.95);
+    padding: 1rem 1.25rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+    overflow-y: auto;
+}
+
+/* Sidebar collapsed: shrink + move out */
+section[data-testid="stSidebar"][aria-expanded="false"] {
+    width: 30px !important;
+    transform: translateX(-290px);
+    cursor: pointer;
+}
+
+/* Push content right when sidebar is open */
+[data-testid="stAppViewContainer"] > main {
+    margin-left: 320px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Pull content back left when sidebar is closed */
+section[data-testid="stSidebar"][aria-expanded="false"] ~ div main {
+    margin-left: 30px !important;
+}
+
+/* Make sure images and boxes behave */
+.step-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.mission-card-container,
+.step-card {
+    margin: 1rem auto;
+    padding: 1.25rem;
+    width: 95%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
