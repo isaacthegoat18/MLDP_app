@@ -1,93 +1,10 @@
+> Isaac:
 import streamlit as st
 import numpy as np
 import pandas as pd
 import joblib
 import time 
-import streamlit.components.v1 as components
 
-components.html("""
-<style>
-#mobile-sidebar-btn {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 10000;
-    background-color: rgba(30, 41, 59, 0.9);
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    font-size: 18px;
-    border-radius: 8px;
-    display: none;
-}
-
-/* Show button on small screens */
-@media (max-width: 768px) {
-    #mobile-sidebar-btn {
-        display: block;
-    }
-
-    section[data-testid="stSidebar"] {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 1000;
-    }
-
-    section[data-testid="stSidebar"].open {
-        transform: translateX(0);
-    }
-}
-
-.sidebar-close-btn {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-}
-</style>
-
-<button id="mobile-sidebar-btn">☰</button>
-
-<script>
-function waitForElement(selector, callback) {
-    const el = document.querySelector(selector);
-    if (el) return callback(el);
-    const observer = new MutationObserver(() => {
-        const el = document.querySelector(selector);
-        if (el) {
-            observer.disconnect();
-            callback(el);
-        }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-}
-
-waitForElement("section[data-testid='stSidebar']", (sidebar) => {
-    const toggleBtn = document.getElementById("mobile-sidebar-btn");
-    toggleBtn.addEventListener("click", () => {
-        sidebar.classList.add("open");
-    });
-
-    // Add close button inside sidebar
-    const closeBtn = document.createElement("button");
-    closeBtn.innerText = "Close Sidebar";
-    closeBtn.className = "sidebar-close-btn";
-    closeBtn.onclick = () => sidebar.classList.remove("open");
-
-    if (!sidebar.querySelector(".sidebar-close-btn")) {
-        sidebar.insertBefore(closeBtn, sidebar.firstChild);
-    }
-});
-</script>
-""", height=0)
 
 st.set_page_config(
     page_title="AI Job Salary Predictor",
@@ -99,56 +16,6 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-/* Sidebar open toggle button (top-left corner) */
-/* Mobile Sidebar Toggle Button */
-.sidebar-toggle-btn {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 9999;
-    background-color: rgba(45, 55, 72, 0.9);
-    color: white;
-    border: none;
-    padding: 0.6rem 0.9rem;
-    font-size: 1.2rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    display: none;
-}
-
-/* Only show on mobile */
-@media screen and (max-width: 768px) {
-    .sidebar-toggle-btn {
-        display: block;
-    }
-
-    section[data-testid="stSidebar"] {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 1000;
-    }
-
-    section[data-testid="stSidebar"].open {
-        transform: translateX(0);
-    }
-}
-
-/* Inside sidebar Close Button */
-.sidebar-close-btn {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-}
 
 /* Make app container a flex row always so sidebar is visible */
 [data-testid="stAppViewContainer"] {
@@ -313,7 +180,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 850px;
     margin: auto;
     background-color: #2d3748;
-    color: #fff;
+    color: #1f2937;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
                 0 4px 6px -2px rgba(0,0,0,0.05);
@@ -330,11 +197,8 @@ h1, h2, h3, h4, h5, h6 {
     }
     .step-card.reverse {
         flex-direction: row-reverse;
-}
-}
 
-.st
-e
+
 p-image img {
     width: 100%;
     border-radius: 0.5rem;
@@ -384,7 +248,6 @@ p-image img {
     height: 1.5rem; 
 }
 
-/* Scrollbar for sidebar */
 section[data-testid="stSidebar"]::-webkit-scrollbar {
     width: 8px;
 }
@@ -394,51 +257,6 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
 }
 </style>
 """, unsafe_allow_html=True)
-
-st.markdown("""
-<!-- Toggle Button -->
-<button id="mobile-sidebar-toggle" class="sidebar-toggle-btn">←</button>
-
-<script>
-    // Wait until Streamlit sidebar is loaded
-    function waitForSidebar(callback) {
-        const interval = setInterval(() => {
-            const sidebar = document.querySelector("section[data-testid='stSidebar']");
-            if (sidebar) {
-                clearInterval(interval);
-                callback(sidebar);
-            }
-        }, 200);
-    }
-
-    waitForSidebar((sidebar) => {
-        // Inject Close Button inside Sidebar
-        const closeBtn = document.createElement("button");
-        closeBtn.innerText = "Close Sidebar";
-        closeBtn.className = "sidebar-close-btn";
-        closeBtn.onclick = () => {
-            sidebar.classList.remove("open");
-        };
-        if (!sidebar.querySelector(".sidebar-close-btn")) {
-            sidebar.insertBefore(closeBtn, sidebar.firstChild);
-        }
-
-        // Open Sidebar from Mobile Toggle
-        const toggleBtn = document.getElementById("mobile-sidebar-toggle");
-        toggleBtn.addEventListener("click", () => {
-            sidebar.classList.add("open");
-        });
-
-        // Auto-close sidebar when window resizes above mobile
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                sidebar.classList.remove('open');
-            }
-        });
-    });
-</script>
-""", unsafe_allow_html=True)
-
 
 
 # Load your model and columns
@@ -486,6 +304,8 @@ with st.sidebar:
     industry = st.selectbox("Industry", ['Automotive', 'Consulting', 'Education', 'Energy', 'Finance', 'Gaming', 'Government', 'Healthcare', 'Manufacturing', 'Media', 'Real Estate', 'Retail', 'Technology', 'Telecommunications', 'Transportation'], index=0,help='Select the industry of the company') 
     
     benefits_score = st.slider("Benefits Score (0-10)", 0, 10
+
+> Isaac:
 , value=2, step=1,help='Enter the benefit score of the job')
     
     num_employees = st.number_input("Number of Employees", min_value=1, max_value=100000, value=1, step=1,help='Enter the amount of employees the company has')
@@ -497,7 +317,7 @@ with st.sidebar:
 
     predict_button = st.button("Predict Salary")
 
-# --- Prediction Logic ---
+# Prediction Logic 
 if num_employees < 50:
     company_size = 'S'
 elif num_employees < 250:
@@ -580,6 +400,7 @@ st.markdown("""
         <div class="step-card ">
             <div class="step-image">
             <img
+
 src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
             </div>
             <div class="step-content">
