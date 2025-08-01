@@ -16,62 +16,66 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-
-
-/* Right side container */
+/* Make app container a flex row always so sidebar is visible */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
-    background-size: cover;         
+    background-size: cover;
     border-radius: 1rem;
     margin: 0.4rem auto;
     padding: 0;
     max-width: 1400px;
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: row !important;
     min-height: calc(100vh - 4rem);
+    position: relative;
 }
-            
-    [data-testid="stAppViewContainer"]::before {
+
+/* Dark blur overlay */
+[data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.7); /* Adjust darkness */
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 0;
 }
-            
-@media (min-width: 768px) {
-    [data-testid="stAppViewContainer"] {
-        flex-direction: row;
-    }
+
+/* Sidebar style */
+section[data-testid="stSidebar"] {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+    overflow-y: auto;
+    max-height: 100vh;
+    padding: 1rem 1.5rem 1rem 1rem;
+    background-color: rgba(45, 55, 72, 0.9);
+    border-radius: 1rem 0 0 1rem;
+    position: relative;
+    z-index: 10;
+    color: #fff;
 }
 
-
-
-/* Main area */
-/*[data-testid="stAppViewContainer"] > .main {
-    padding: 0rem;
-    background-color: #2d3748;
-    border-radius: 0 0 1rem 1rem;
+/* Main content area next to sidebar */
+[data-testid="stAppViewContainer"] > main {
+    flex-grow: 1;
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 10;
+    color: white;
 }
-@media (min-width: 768px) {
-    [data-testid="stAppViewContainer"] > .main {
-        width: 55%;
-        border-radius: 0 1rem 1rem 0;
-    }
-}*/
-            
 
-/* Text and headers */
+/* Hide Streamlit header/footer */
+#MainMenu, footer, header {
+    visibility: hidden;
+}
+
+/* Typography colors */
 h1, h2, h3, h4, h5, h6 {
     color: #0080ff;
 }
 
-
-/* Info box */
+/* Info box styling */
 .info-box {
     background-color: rgba(45, 55, 72, 0.9);
     border-radius: 0.75rem;
@@ -79,21 +83,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem;
     color: #cbd5e0;
 }
-.info-box p{
-            color:#fff
+.info-box p {
+    color: #fff;
 }
 
-.info-box h3 {
-    margin-bottom: 1rem;
-    color: #e2e8f0;
-}
-
-/* Hide Streamlit header/footer */
-#MainMenu, footer, header {
-    visibility: hidden;
-}
-            
-/* Mission Background */
+/* Mission Background and content styles (unchanged) */
 .mission-background {
     padding: 2px 4px;
     min-height: 200px;
@@ -164,7 +158,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How It Works Section */
 .how-it-works-section {
-   
     padding: 2rem 1rem;
     color: white;
 }
@@ -196,8 +189,6 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
     border: 1px solid #e5e7eb;
 }
-            
-
 
 @media (min-width: 768px) {
     .step-card {
@@ -253,24 +244,23 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5rem;
 }
 
- .section-gap {
+.section-gap {
     height: 1.5rem; 
-}   
-            
+}
 
-@media (max-width: 768px) {
-    section[data-testid="stSidebar"] {
-        overflow-y: auto;
-        max-height: 100vh;
-        padding-right: 1rem;
-    }
-}      
-            
+/* Scrollbar for sidebar */
+section[data-testid="stSidebar"]::-webkit-scrollbar {
+    width: 8px;
+}
+section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 
-
+# Load your model and columns
 model = joblib.load("ai_salary_model.pkl")
 model_columns = joblib.load("model_columns.pkl")
 
@@ -278,7 +268,6 @@ st.title("💰AI Job Salary Predictor")
 st.markdown("Use the sidebar to select the parameters for salary prediction. The predicted salary will appear below.")
 
 result_placeholder = st.empty()
-
 loading_placeholder = st.empty()
 
 employment_options = {
@@ -327,7 +316,6 @@ with st.sidebar:
     predict_button = st.button("Predict Salary")
 
 # --- Prediction Logic ---
-# Number of employees
 if num_employees < 50:
     company_size = 'S'
 elif num_employees < 250:
@@ -336,13 +324,11 @@ else:
     company_size = 'L'
 
 if predict_button:
-    # Clear previous results and show loading spinner
     result_placeholder.empty()
     with loading_placeholder.container():
         st.spinner("Predicting salary...")
-        time.sleep(1.5) # Simulate prediction time
+        time.sleep(1.5)
 
-    # Input as DataFrame
     input_df = pd.DataFrame([{
         'job_title': job_title,
         'employment_type': employment_type,
@@ -404,7 +390,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="section-gap"></div>', unsafe_allow_html=True)
-
 
 st.markdown("""
 <div class="how-it-works-section">
