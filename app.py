@@ -432,5 +432,10 @@ st.markdown("""
             <div class="step-content">
                 <div class="icon-wrapper">💡</div>
                 <h3>Step 3: Prediction Value</h3>
-                <p>Receive an
+                <p>Receive an immediate prediction result with detailed guidance on how the AI job salary works and some things to take note of. It's as simple as that!</p>
+            </div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
