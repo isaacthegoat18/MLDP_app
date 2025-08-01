@@ -256,6 +256,59 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
+
+@media (max-width: 768px) {
+    /* Sidebar fixed on left, full height */
+    section[data-testid="stSidebar"] {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh !important;
+        width: 320px !important;
+        max-width: 320px !important;
+        overflow-y: auto;
+        padding: 1rem 1.5rem 1rem 1rem;
+        background-color: rgba(45, 55, 72, 0.95);
+        border-radius: 0 0.5rem 0.5rem 0;
+        z-index: 20;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+    }
+
+    /* Push main content to the right of sidebar */
+    [data-testid="stAppViewContainer"] > main {
+        margin-left: 320px !important;
+        padding: 1rem 1.25rem;
+    }
+
+    /* Images: keep aspect ratio and prevent shrink */
+    .step-image img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    /* Boxes & cards: prevent overflow or squish */
+    .mission-card-container,
+    .step-card {
+        margin: 1rem auto;
+        padding: 1.25rem;
+        width: 95%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .mission-content h2,
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .mission-content p,
+    .step-content p {
+        font-size: 1rem;
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
