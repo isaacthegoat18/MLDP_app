@@ -224,6 +224,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .step-content h3 {
+color: #fff
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
