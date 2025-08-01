@@ -196,10 +196,12 @@ h1, h2, h3, h4, h5, h6 {
     }
     .step-card.reverse {
         flex-direction: row-reverse;
-    }
+}
 }
 
-.step-image img {
+.st
+e
+p-image img {
     width: 100%;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -256,130 +258,7 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
-
-/* Sidebar fixed style for desktop */
-section[data-testid="stSidebar"] {
-    transition: transform 0.3s ease, width 0.3s ease;
-    width: 320px !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 20;
-    background-color: rgba(45, 55, 72, 0.95);
-    padding: 1rem 1.25rem;
-    border-radius: 0 0.5rem 0.5rem 0;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-    overflow-y: auto;
-}
-
-/* Sidebar collapsed: shrink + move out */
-section[data-testid="stSidebar"][aria-expanded="false"] {
-    width: 40px !important;
-    transform: translateX(-290px);
-    cursor: pointer;
-}
-
-/* Push content right when sidebar is open */
-[data-testid="stAppViewContainer"] > main {
-    margin-left: 320px;
-    transition: margin-left 0.3s ease;
-}
-
-/* Pull content back left when sidebar is closed */
-section[data-testid="stSidebar"][aria-expanded="false"] ~ div main {
-    margin-left: 30px !important;
-}
-
-/* Make sure images and boxes behave */
-.step-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 0.5rem;
-}
-
-.mission-card-container,
-.step-card {
-    margin: 1rem auto;
-    padding: 1.25rem;
-    width: 95%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-/* Arrow button to open sidebar - fixed top-left */
-#sidebar-open-btn {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 30;
-    background-color: rgba(45, 55, 72, 0.9);
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    border-radius: 0 0.5rem 0.5rem 0;
-    width: 40px;
-    height: 40px;
-    display: none; /* Hidden by default, show on mobile */
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-}
-
-/* Show open button on mobile only when sidebar closed */
-@media (max-width: 768px) {
-    #sidebar-open-btn {
-        display: flex;
-    }
-}
-
-/* Hide the open button when sidebar is open */
-section[data-testid="stSidebar"][aria-expanded="true"] ~ #sidebar-open-btn {
-    display: none !important;
-}
-
-/* Close button inside sidebar */
-#sidebar-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 1.8rem;
-    color: white;
-    cursor: pointer;
-    z-index: 25;
-}
-
-/* Start sidebar closed on mobile */
-@media (max-width: 768px) {
-    section[data-testid="stSidebar"] {
-        transform: translateX(-290px);
-        width: 320px !important;
-        transition: transform 0.3s ease;
-    }
-    section[data-testid="stSidebar"][aria-expanded="true"] {
-        transform: translateX(0);
-    }
-
-    /* Push content right when sidebar open */
-    [data-testid="stAppViewContainer"] > main {
-        margin-left: 30px !important;
-        transition: margin-left 0.3s ease;
-    }
-    section[data-testid="stSidebar"][aria-expanded="true"] ~ div main {
-        margin-left: 320px !important;
-    }
-}
 </style>
-""", unsafe_allow_html=True)
-
-
-# Add the arrow button to open sidebar
-st.markdown("""
-<button id="sidebar-open-btn" aria-label="Open sidebar">&#8594;</button>
 """, unsafe_allow_html=True)
 
 
@@ -410,16 +289,14 @@ experience_level_options = {
 with st.sidebar:
     st.markdown("## Set Prediction Parameters")
 
-    # Add close button inside sidebar (will be created dynamically by JS, so no Streamlit button here)
-
-    job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") 
+    job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") # Default to NLP Engineer
     
     employment_display = st.selectbox("Employment Type", list(employment_options.keys()),index=0,help='Select the employment type of the job')
     employment_type = employment_options[employment_display] 
     
-    company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company')
+    company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company') # Default to Switzerland
     
-    employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in')
+    employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in') # Default to India
     
     remote_ratio = st.slider("Remote Work Ratio (%)", 0, 100, value=0, step=50,help='Select how much does the company work remotely: 0 (No remote), 50 (Hybrid), 100 (Fully remote)') 
     
@@ -429,7 +306,8 @@ with st.sidebar:
     
     industry = st.selectbox("Industry", ['Automotive', 'Consulting', 'Education', 'Energy', 'Finance', 'Gaming', 'Government', 'Healthcare', 'Manufacturing', 'Media', 'Real Estate', 'Retail', 'Technology', 'Telecommunications', 'Transportation'], index=0,help='Select the industry of the company') 
     
-    benefits_score = st.slider("Benefits Score (0-10)", 0, 10, value=2, step=1,help='Enter the benefit score of the job')
+    benefits_score = st.slider("Benefits Score (0-10)", 0, 10
+, value=2, step=1,help='Enter the benefit score of the job')
     
     num_employees = st.number_input("Number of Employees", min_value=1, max_value=100000, value=1, step=1,help='Enter the amount of employees the company has')
 
@@ -503,8 +381,11 @@ st.markdown("""
                 I recognise that individuals may often feel confused or overwhelmed by the
                 ever changing job market of AI. This might make them feel unsure of their worth
                 and shortchange them of their talents.<br><br>
-                My mission is to help AI job seekers understand their expected salary, so they
-                can negotiate better offers and find fair jobs.
+                My Mission is to empower individuals using data to bring clarity,
+                fairness, and confidence to salary expectations in the global AI job market.
+                I harness the power of machine learning to uncover real-time, personalized salary
+                predictions so that you can stop guessing your worth and start making smarter, more informed
+                career decisions.
             </p>
         </div>
     </div>
@@ -517,86 +398,44 @@ st.markdown("""
 <div class="how-it-works-section">
     <h2 class="section-title">How It Works</h2>
     <div class="steps">
-        <div class="step-card">
+        <div class="step-card ">
             <div class="step-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gear_icon.svg/120px-Gear_icon.svg.png" alt="Setup Environment" />
+            <img
+src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
             </div>
             <div class="step-content">
-                <div class="icon-wrapper">&#9881;</div>
-                <h3>Step 1: Setup Environment</h3>
-                <p>Configure your job parameters such as job title, experience, and location on the sidebar.</p>
+                <div class="icon-wrapper">✏    </div>
+                <h3>Step 1: Set parameters</h3>
+                <p>Simply set the job's parameters on the left hand side of the screen to the job you are currently looking at</p>
             </div>
         </div>
-        <div class="step-card reverse">
+""", unsafe_allow_html=True)
+
+st.markdown("""
+        <div class="step-card ">
             <div class="step-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Iconic_image_search.svg/120px-Iconic_image_search.svg.png" alt="Model Prediction" />
+                <img src="https://i.ibb.co/C4J2nWs/Screenshot-2025-08-01-085150.png" alt="ML Step">
             </div>
             <div class="step-content">
-                <div class="icon-wrapper">&#128269;</div>
-                <h3>Step 2: Model Prediction</h3>
-                <p>Click "Predict Salary" to get the estimated salary based on your inputs using our AI model.</p>
+                <div class="icon-wrapper">🧠</div>
+                <h3>Step 2: Click the button</h3>
+                <p>Just click the "Predict Salary" button. This will trigger our highly skilled and trained model to give you the best prediction results for salary as possible.</p>
             </div>
         </div>
+""", unsafe_allow_html=True)
+st.markdown('<div class="section-gap"></div>', unsafe_allow_html=True)
+
+st.markdown("""
         <div class="step-card">
             <div class="step-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Iconic_money.svg/120px-Iconic_money.svg.png" alt="Negotiate" />
+                <img src="https://i.postimg.cc/zfHkzw6g/Screenshot-2025-08-01-085917.png" alt="Detailed Guidance Step">
             </div>
             <div class="step-content">
-                <div class="icon-wrapper">&#128176;</div>
-                <h3>Step 3: Negotiate &amp; Decide</h3>
-                <p>Use the prediction to negotiate your salary or decide on job offers with confidence.</p>
+                <div class="icon-wrapper">💡</div>
+                <h3>Step 3: Prediction Value</h3>
+                <p>Receive an accurate prediction value based on the parameters YOU set!</p>
             </div>
         </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
-
-
-# JavaScript for sidebar toggle with arrow open button & close inside sidebar
-st.markdown("""
-<script>
-window.onload = function() {
-    const sidebar = document.querySelector('section[data-testid="stSidebar"]');
-    const openBtn = document.getElementById('sidebar-open-btn');
-
-    // Create close button inside sidebar if missing
-    let closeBtn = document.getElementById('sidebar-close-btn');
-    if (!closeBtn) {
-        closeBtn = document.createElement('button');
-        closeBtn.id = 'sidebar-close-btn';
-        closeBtn.innerHTML = '&times;';
-        sidebar.prepend(closeBtn);
-    }
-
-    function openSidebar() {
-        sidebar.setAttribute('aria-expanded', 'true');
-        openBtn.style.display = 'none';
-    }
-
-    function closeSidebar() {
-        sidebar.setAttribute('aria-expanded', 'false');
-        openBtn.style.display = 'flex';
-    }
-
-    // Start sidebar closed on mobile, open on desktop
-    if(window.innerWidth <= 768) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-
-    openBtn.addEventListener('click', openSidebar);
-    closeBtn.addEventListener('click', closeSidebar);
-
-    window.addEventListener('resize', () => {
-        if(window.innerWidth > 768) {
-            openSidebar();
-        } else {
-            closeSidebar();
-        }
-    });
-};
-</script>
-""", unsafe_allow_html=True)
-
-
