@@ -395,9 +395,7 @@ st.markdown("""
     <div class="steps">
         <div class="step-card ">
             <div class="step-image">
-            <img
-
-src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
+            <img src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
             </div>
             <div class="step-content">
                 <div class="icon-wrapper">✏    </div>
