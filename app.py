@@ -302,10 +302,7 @@ with st.sidebar:
     
     industry = st.selectbox("Industry", ['Automotive', 'Consulting', 'Education', 'Energy', 'Finance', 'Gaming', 'Government', 'Healthcare', 'Manufacturing', 'Media', 'Real Estate', 'Retail', 'Technology', 'Telecommunications', 'Transportation'], index=0,help='Select the industry of the company') 
     
-    benefits_score = st.slider("Benefits Score (0-10)", 0, 10
-
-> Isaac:
-, value=2, step=1,help='Enter the benefit score of the job')
+    benefits_score = st.slider("Benefits Score (0-10)", 0, 10, value=2, step=1,help='Enter the benefit score of the job')
     
     num_employees = st.number_input("Number of Employees", min_value=1, max_value=100000, value=1, step=1,help='Enter the amount of employees the company has')
 
