@@ -196,9 +196,10 @@ h1, h2, h3, h4, h5, h6 {
     }
     .step-card.reverse {
         flex-direction: row-reverse;
+    }
+}
 
-
-p-image img {
+.step-image img {
     width: 100%;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -247,6 +248,7 @@ p-image img {
     height: 1.5rem; 
 }
 
+/* Scrollbar for sidebar */
 section[data-testid="stSidebar"]::-webkit-scrollbar {
     width: 8px;
 }
@@ -313,7 +315,7 @@ with st.sidebar:
 
     predict_button = st.button("Predict Salary")
 
-# Prediction Logic 
+# --- Prediction Logic ---
 if num_employees < 50:
     company_size = 'S'
 elif num_employees < 250:
@@ -433,3 +435,4 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
+
