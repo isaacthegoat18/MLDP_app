@@ -15,7 +15,11 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-
+st.set_page_config(
+    page_title="AI Job Salary Predictor",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 /* Right side container */
 [data-testid="stAppViewContainer"] {
