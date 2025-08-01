@@ -376,7 +376,7 @@ section[data-testid="stSidebar"] {
 
 /* Sidebar collapsed: shrink + move out */
 section[data-testid="stSidebar"][aria-expanded="false"] {
-    width: 30px !important;
+    width: 40px !important;
     transform: translateX(-290px);
     cursor: pointer;
 }
