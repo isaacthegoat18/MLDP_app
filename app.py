@@ -105,7 +105,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .mission-card-container {
     position: relative;
-    max-width: 896px;
+    max-width: 1000px;
     margin: auto;
     padding: 32px;
     background-color: rgba(45, 55, 72, 0.9);
