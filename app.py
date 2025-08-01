@@ -16,26 +16,29 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+/* Sidebar open toggle button (top-left corner) */
+/* Mobile Sidebar Toggle Button */
 .sidebar-toggle-btn {
     position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 999;
+    top: 1rem;
+    left: 1rem;
+    z-index: 9999;
     background-color: rgba(45, 55, 72, 0.9);
-    border: none;
-    padding: 0.5rem 0.75rem;
     color: white;
+    border: none;
+    padding: 0.6rem 0.9rem;
     font-size: 1.2rem;
     border-radius: 0.5rem;
     cursor: pointer;
     display: none;
 }
 
-/* Show the toggle on smaller screens */
+/* Only show on mobile */
 @media screen and (max-width: 768px) {
     .sidebar-toggle-btn {
         display: block;
     }
+
     section[data-testid="stSidebar"] {
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
@@ -43,24 +46,26 @@ st.markdown("""
         top: 0;
         left: 0;
         height: 100%;
-        z-index: 999;
+        z-index: 1000;
     }
+
     section[data-testid="stSidebar"].open {
         transform: translateX(0);
     }
 }
 
-/* Inside sidebar close button */
+/* Inside sidebar Close Button */
 .sidebar-close-btn {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     border: none;
-    padding: 0.25rem 0.75rem;
+    padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
-    border-radius: 0.25rem;
+    border-radius: 0.3rem;
     cursor: pointer;
     margin-bottom: 1rem;
 }
+
 /* Make app container a flex row always so sidebar is visible */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
@@ -307,25 +312,49 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<button class="sidebar-toggle-btn" onclick="document.querySelector('section[data-testid=stSidebar]').classList.add('open')">☰</button>
+<!-- Toggle Button -->
+<button id="mobile-sidebar-toggle" class="sidebar-toggle-btn">←</button>
 
 <script>
-    const closeBtn = document.createElement("button");
-    closeBtn.innerText = "Close Sidebar";
-    closeBtn.className = "sidebar-close-btn";
-    closeBtn.onclick = () => {
-        document.querySelector("section[data-testid=stSidebar]").classList.remove("open");
-    };
+    // Wait until Streamlit sidebar is loaded
+    function waitForSidebar(callback) {
+        const interval = setInterval(() => {
+            const sidebar = document.querySelector("section[data-testid='stSidebar']");
+            if (sidebar) {
+                clearInterval(interval);
+                callback(sidebar);
+            }
+        }, 200);
+    }
 
-    const sidebar = document.querySelector("section[data-testid=stSidebar]");
-    const interval = setInterval(() => {
-        const sb = document.querySelector("section[data-testid=stSidebar]");
-        if (sb && !sb.querySelector(".sidebar-close-btn")) {
-            sb.insertBefore(closeBtn, sb.firstChild);
+    waitForSidebar((sidebar) => {
+        // Inject Close Button inside Sidebar
+        const closeBtn = document.createElement("button");
+        closeBtn.innerText = "Close Sidebar";
+        closeBtn.className = "sidebar-close-btn";
+        closeBtn.onclick = () => {
+            sidebar.classList.remove("open");
+        };
+        if (!sidebar.querySelector(".sidebar-close-btn")) {
+            sidebar.insertBefore(closeBtn, sidebar.firstChild);
         }
-    }, 500);
+
+        // Open Sidebar from Mobile Toggle
+        const toggleBtn = document.getElementById("mobile-sidebar-toggle");
+        toggleBtn.addEventListener("click", () => {
+            sidebar.classList.add("open");
+        });
+
+        // Auto-close sidebar when window resizes above mobile
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('open');
+            }
+        });
+    });
 </script>
 """, unsafe_allow_html=True)
+
 
 
 # Load your model and columns
