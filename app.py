@@ -18,20 +18,19 @@ st.markdown("""
 
 
 
-/* Right side container */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
-    background-size: cover;         
+    background-size: cover;
     border-radius: 1rem;
     margin: 0.4rem auto;
     padding: 0;
     max-width: 1400px;
-    display: flex;
-    flex-direction: column;
     min-height: calc(100vh - 4rem);
+    position: relative;
+    z-index: 1;
 }
-            
-    [data-testid="stAppViewContainer"]::before {
+
+[data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
     top: 0;
@@ -39,14 +38,8 @@ st.markdown("""
     width: 100%;
     height: 100%;
     backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.7); /* Adjust darkness */
-    z-index: 0;
-}
-            
-@media (min-width: 768px) {
-    [data-testid="stAppViewContainer"] {
-        flex-direction: row;
-    }
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
 }
 
 
