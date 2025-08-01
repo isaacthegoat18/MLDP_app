@@ -14,10 +14,9 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Use system fonts instead of Google Fonts */
-body, html, h1, h2, h3, h4, h5, h6, p, div, span {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+
 
 /* Right side container */
 [data-testid="stAppViewContainer"] {
@@ -31,8 +30,8 @@ body, html, h1, h2, h3, h4, h5, h6, p, div, span {
     flex-direction: column;
     min-height: calc(100vh - 4rem);
 }
-
-[data-testid="stAppViewContainer"]::before {
+            
+    [data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
     top: 0;
@@ -40,19 +39,37 @@ body, html, h1, h2, h3, h4, h5, h6, p, div, span {
     width: 100%;
     height: 100%;
     backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust darkness */
     z-index: 0;
 }
-
+            
 @media (min-width: 768px) {
     [data-testid="stAppViewContainer"] {
         flex-direction: row;
     }
 }
 
+
+
+/* Main area */
+/*[data-testid="stAppViewContainer"] > .main {
+    padding: 0rem;
+    background-color: #2d3748;
+    border-radius: 0 0 1rem 1rem;
+}
+@media (min-width: 768px) {
+    [data-testid="stAppViewContainer"] > .main {
+        width: 55%;
+        border-radius: 0 1rem 1rem 0;
+    }
+}*/
+            
+
+/* Text and headers */
 h1, h2, h3, h4, h5, h6 {
     color: #0080ff;
 }
+
 
 /* Info box */
 .info-box {
@@ -62,9 +79,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem;
     color: #cbd5e0;
 }
-.info-box p {
-    color: #fff;
+.info-box p{
+            color:#fff
 }
+
 .info-box h3 {
     margin-bottom: 1rem;
     color: #e2e8f0;
@@ -74,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 #MainMenu, footer, header {
     visibility: hidden;
 }
-
+            
 /* Mission Background */
 .mission-background {
     padding: 2px 4px;
@@ -131,11 +149,13 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1;
     color: white;
 }
+
 .mission-content h2 {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 32px;
 }
+
 .mission-content p {
     font-size: 1.125rem;
     color: #fff;
@@ -144,20 +164,24 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How It Works Section */
 .how-it-works-section {
+   
     padding: 2rem 1rem;
     color: white;
 }
+
 .section-title {
     font-size: 2.25rem;
     font-weight: 800;
     text-align: center;
     margin-bottom: 3rem;
 }
+
 .steps {
     display: flex;
     flex-direction: column;
     gap: 3rem;
 }
+
 .step-card {
     max-width: 850px;
     margin: auto;
@@ -172,6 +196,9 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
     border: 1px solid #e5e7eb;
 }
+            
+
+
 @media (min-width: 768px) {
     .step-card {
         flex-direction: row;
@@ -180,15 +207,18 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: row-reverse;
     }
 }
+
 .step-image img {
     width: 100%;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
 .step-content {
     flex: 1;
     text-align: left;
 }
+
 .icon-wrapper {
     width: 4rem;
     height: 4rem;
@@ -201,15 +231,18 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.875rem;
     margin-bottom: 1rem;
 }
+
 .step-content h3 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
+
 .step-content p {
     color: #fff;
     line-height: 1.625;
 }
+
 .feature-list {
     list-style: none;
     padding-left: 0;
@@ -219,16 +252,20 @@ h1, h2, h3, h4, h5, h6 {
 .feature-list li {
     margin-bottom: 0.5rem;
 }
-.section-gap {
+
+ .section-gap {
     height: 1.5rem; 
 }   
+            
+
 @media (max-width: 768px) {
     section[data-testid="stSidebar"] {
         overflow-y: auto;
         max-height: 100vh;
         padding-right: 1rem;
     }
-}
+}      
+            
 </style>
 """, unsafe_allow_html=True)
 
@@ -413,4 +450,3 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
-
