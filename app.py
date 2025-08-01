@@ -21,7 +21,7 @@ st.markdown("""
 /* Right side container */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
-    background-size: cover;          
+    background-size: cover;         
     border-radius: 1rem;
     margin: 0.4rem auto;
     padding: 0;
@@ -164,7 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How It Works Section */
 .how-it-works-section {
-    
+   
     padding: 2rem 1rem;
     color: white;
 }
@@ -255,7 +255,8 @@ h1, h2, h3, h4, h5, h6 {
 
  .section-gap {
     height: 1.5rem; 
-}         
+}   
+            
 
 @media (max-width: 768px) {
     section[data-testid="stSidebar"] {
@@ -263,7 +264,8 @@ h1, h2, h3, h4, h5, h6 {
         max-height: 100vh;
         padding-right: 1rem;
     }
-}         
+}      
+            
 </style>
 """, unsafe_allow_html=True)
 
@@ -413,7 +415,7 @@ st.markdown("""
             <img src="https://i.ibb.co/svzTktJ2/Screenshot-2025-08-01-084431.png" alt="Adjust Parameters">
             </div>
             <div class="step-content">
-                <div class="icon-wrapper">✏ </div>
+                <div class="icon-wrapper">✏    </div>
                 <h3>Step 1: Set parameters</h3>
                 <p>Simply set the job's parameters on the left hand side of the screen to the job you are currently looking at</p>
             </div>
@@ -448,5 +450,3 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
-
- 
