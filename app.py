@@ -16,7 +16,6 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* Make app container a flex row always so sidebar is visible */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
     background-size: cover;
@@ -30,7 +29,6 @@ st.markdown("""
     position: relative;
 }
 
-/* Dark blur overlay */
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
@@ -41,7 +39,6 @@ st.markdown("""
     z-index: 0;
 }
 
-/* Sidebar style */
 section[data-testid="stSidebar"] {
     width: 320px;
     min-width: 320px;
@@ -56,7 +53,6 @@ section[data-testid="stSidebar"] {
     color: #fff;
 }
 
-/* Main content area next to sidebar */
 [data-testid="stAppViewContainer"] > main {
     flex-grow: 1;
     padding: 1rem 2rem;
@@ -65,17 +61,14 @@ section[data-testid="stSidebar"] {
     color: white;
 }
 
-/* Hide Streamlit header/footer */
 #MainMenu, footer, header {
     visibility: hidden;
 }
 
-/* Typography colors */
 h1, h2, h3, h4, h5, h6 {
     color: #0080ff;
 }
 
-/* Info box styling */
 .info-box {
     background-color: rgba(45, 55, 72, 0.9);
     border-radius: 0.75rem;
@@ -87,7 +80,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
 }
 
-/* Mission Background and content styles (unchanged) */
 .mission-background {
     padding: 2px 4px;
     min-height: 200px;
@@ -316,7 +308,7 @@ with st.sidebar:
 
     predict_button = st.button("Predict Salary")
 
-# --- Prediction Logic ---
+#Prediction Logic
 if num_employees < 50:
     company_size = 'S'
 elif num_employees < 250:
