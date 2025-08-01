@@ -256,6 +256,42 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
+
+@media (max-width: 768px) {
+    /* Make container stack vertically on small screens */
+    [data-testid="stAppViewContainer"] {
+        flex-direction: column !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+    }
+
+    /* Sidebar becomes full width on mobile */
+    section[data-testid="stSidebar"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: auto !important;
+        height: auto !important;
+        max-height: 300px; /* or suitable height */
+        overflow-y: auto;
+        border-radius: 0 0 1rem 1rem;
+        padding: 1rem 1rem 1rem 1rem;
+        position: relative;
+        z-index: 10;
+        margin-bottom: 1rem;
+    }
+
+    /* Main content full width */
+    [data-testid="stAppViewContainer"] > main {
+        padding: 1rem 1rem !important;
+        width: 100% !important;
+        min-height: auto !important;
+    }
+
+    /* Fix margins/padding if needed */
+    .info-box, .mission-card-container, .how-it-works-section {
+        margin: 0 0.5rem;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
