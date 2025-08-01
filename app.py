@@ -8,14 +8,12 @@ import time
 st.set_page_config(
     page_title="AI Job Salary Predictor",
     layout="wide",
-    initial_sidebar_state="expanded"
-
 )
 
+show_sidebar = st.sidebar.checkbox("Show Parameters", value=True)
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 
 
@@ -294,36 +292,37 @@ experience_level_options = {
     "Executive-level": "EX"
 }
 
-with st.sidebar:
-    st.markdown("## Set Prediction Parameters")
+if show_sidebar:
+    with st.sidebar:
+        st.markdown("## Set Prediction Parameters")
+        job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") # Default to NLP Engineer
+        
+        employment_display = st.selectbox("Employment Type", list(employment_options.keys()),index=0,help='Select the employment type of the job')
+        
+        employment_type = employment_options[employment_display] 
+    
+        company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company') # Default to Switzerland
+    
+        employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in') # Default to India
+    
+        remote_ratio = st.slider("Remote Work Ratio (%)", 0, 100, value=0, step=50,help='Select how much does the company work remotely: 0 (No remote), 50 (Hybrid), 100 (Fully remote)') 
+    
+        number_of_req_skills = st.number_input("Number of Required Skills", 0, 20, value=4, step=1,help='Select the number of required skills for the job')
+    
+        years_experience = st.number_input("Years of Experience", 0.0, 50.0, value=1.0, step=0.5,help='Enter the amount of years of experience for the job')
+    
+        industry = st.selectbox("Industry", ['Automotive', 'Consulting', 'Education', 'Energy', 'Finance', 'Gaming', 'Government', 'Healthcare', 'Manufacturing', 'Media', 'Real Estate', 'Retail', 'Technology', 'Telecommunications', 'Transportation'], index=0,help='Select the industry of the company') 
+    
+        benefits_score = st.slider("Benefits Score (0-10)", 0, 10, value=2, step=1,help='Enter the benefit score of the job')
+    
+        num_employees = st.number_input("Number of Employees", min_value=1, max_value=100000, value=1, step=1,help='Enter the amount of employees the company has')
 
-    job_title = st.selectbox("Job Title", ['AI Architect', 'AI Consultant', 'AI Product Manager', 'AI Research Scientist', 'AI Software Engineer', 'AI Specialist', 'Autonomous Systems Engineer', 'Computer Vision Engineer', 'Data Analyst', 'Data Engineer', 'Data Scientist', 'Deep Learning Engineer','Head of AI', 'Machine Learning Engineer', 'Machine Learning Researcher' ,'ML Ops Engineer', 'NLP Engineer', 'Principal Data Scientist', 'Research Scientist', 'Robotics Engineer'], index=0,help="Select the name of the job") # Default to NLP Engineer
+        experience_label = st.selectbox("Experience Level", list(experience_level_options.keys()), index=0,help='Select the experience level of the job required')
+        experience_level = experience_level_options[experience_label]
     
-    employment_display = st.selectbox("Employment Type", list(employment_options.keys()),index=0,help='Select the employment type of the job')
-    employment_type = employment_options[employment_display] 
-    
-    company_location = st.selectbox("Company Location", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the country location of the company') # Default to Switzerland
-    
-    employee_residence = st.selectbox("Employee Residence", ['Australia', 'Austria', 'Canada', 'China', 'Denmark', 'Finland', 'France', 'Germany', 'India', 'Ireland', 'Israel', 'Japan' ,'Netherlands' ,'Norway' ,'Singapore' ,'South Korea', 'Sweden', 'Switzerland',' United Kingdom' ,'United States'], index=0,help='Select the location that you are residing in') # Default to India
-    
-    remote_ratio = st.slider("Remote Work Ratio (%)", 0, 100, value=0, step=50,help='Select how much does the company work remotely: 0 (No remote), 50 (Hybrid), 100 (Fully remote)') 
-    
-    number_of_req_skills = st.number_input("Number of Required Skills", 0, 20, value=4, step=1,help='Select the number of required skills for the job')
-    
-    years_experience = st.number_input("Years of Experience", 0.0, 50.0, value=1.0, step=0.5,help='Enter the amount of years of experience for the job')
-    
-    industry = st.selectbox("Industry", ['Automotive', 'Consulting', 'Education', 'Energy', 'Finance', 'Gaming', 'Government', 'Healthcare', 'Manufacturing', 'Media', 'Real Estate', 'Retail', 'Technology', 'Telecommunications', 'Transportation'], index=0,help='Select the industry of the company') 
-    
-    benefits_score = st.slider("Benefits Score (0-10)", 0, 10, value=2, step=1,help='Enter the benefit score of the job')
-    
-    num_employees = st.number_input("Number of Employees", min_value=1, max_value=100000, value=1, step=1,help='Enter the amount of employees the company has')
+        education_required = st.selectbox("Education Level", ['Associate', 'Bachelor', 'Master', 'PhD'], index=0,help='Select the education level required for the job') 
 
-    experience_label = st.selectbox("Experience Level", list(experience_level_options.keys()), index=0,help='Select the experience level of the job required')
-    experience_level = experience_level_options[experience_label]
-    
-    education_required = st.selectbox("Education Level", ['Associate', 'Bachelor', 'Master', 'PhD'], index=0,help='Select the education level required for the job') 
-
-    predict_button = st.button("Predict Salary")
+        predict_button = st.button("Predict Salary")
 
 # --- Prediction Logic ---
 # Number of employees
