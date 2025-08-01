@@ -16,7 +16,7 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* Make app container a flex row always so sidebar is visible */
+/* Main App Container */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
     background-size: cover;
@@ -24,8 +24,8 @@ st.markdown("""
     margin: 0.4rem auto;
     padding: 0;
     max-width: 1400px;
-    display: flex !important;
-    flex-direction: row !important;
+    display: flex;
+    flex-direction: column; /* Stack sidebar and main content on mobile */
     min-height: calc(100vh - 4rem);
     position: relative;
 }
@@ -43,26 +43,44 @@ st.markdown("""
 
 /* Sidebar style */
 section[data-testid="stSidebar"] {
-    width: 320px;
-    min-width: 320px;
-    max-width: 320px;
-    overflow-y: auto;
-    max-height: 100vh;
-    padding: 1rem 1.5rem 1rem 1rem;
+    width: 100%; /* Full width on mobile */
+    max-height: auto;
+    padding: 1rem 1rem 1rem 1rem;
     background-color: rgba(45, 55, 72, 0.9);
-    border-radius: 1rem 0 0 1rem;
+    border-radius: 1rem 1rem 0 0; /* Rounded corners on top for mobile */
     position: relative;
     z-index: 10;
     color: #fff;
+    order: 1; /* Place sidebar at the top */
 }
 
 /* Main content area next to sidebar */
 [data-testid="stAppViewContainer"] > main {
     flex-grow: 1;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     position: relative;
     z-index: 10;
     color: white;
+    order: 2; /* Place main content below sidebar */
+}
+
+/* On larger screens, switch to a row layout */
+@media (min-width: 768px) {
+    [data-testid="stAppViewContainer"] {
+        flex-direction: row;
+    }
+    section[data-testid="stSidebar"] {
+        width: 320px;
+        min-width: 320px;
+        max-width: 320px;
+        border-radius: 1rem 0 0 1rem; /* Back to original rounded corners */
+        max-height: 100vh;
+        order: 1;
+    }
+    [data-testid="stAppViewContainer"] > main {
+        padding: 1rem 2rem;
+        order: 2;
+    }
 }
 
 /* Hide Streamlit header/footer */
@@ -190,23 +208,18 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #e5e7eb;
 }
 
-@media (min-width: 768px) {
-    .step-card {
-        flex-direction: row;
-    }
-    .step-card.reverse {
-        flex-direction: row-reverse;
-    }
+.step-image {
+    flex-basis: 40%;
 }
-
 .step-image img {
     width: 100%;
+    height: auto;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .step-content {
-    flex: 1;
+    flex-basis: 60%;
     text-align: left;
 }
 
@@ -227,6 +240,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    color: #0080ff;
 }
 
 .step-content p {
@@ -245,7 +259,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-gap {
-    height: 1.5rem; 
+    height: 1.5rem;
 }
 
 /* Scrollbar for sidebar */
@@ -257,39 +271,13 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-    /* Make container stack vertically on small screens */
-    [data-testid="stAppViewContainer"] {
-        flex-direction: column !important;
-        max-width: 100% !important;
-        min-height: auto !important;
+/* Responsive adjustments for larger screens */
+@media (min-width: 768px) {
+    .step-card {
+        flex-direction: row;
     }
-
-    /* Sidebar becomes full width on mobile */
-    section[data-testid="stSidebar"] {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: auto !important;
-        height: auto !important;
-        max-height: 300px; /* or suitable height */
-        overflow-y: auto;
-        border-radius: 0 0 1rem 1rem;
-        padding: 1rem 1rem 1rem 1rem;
-        position: relative;
-        z-index: 10;
-        margin-bottom: 1rem;
-    }
-
-    /* Main content full width */
-    [data-testid="stAppViewContainer"] > main {
-        padding: 1rem 1rem !important;
-        width: 100% !important;
-        min-height: auto !important;
-    }
-
-    /* Fix margins/padding if needed */
-    .info-box, .mission-card-container, .how-it-works-section {
-        margin: 0 0.5rem;
+    .step-card.reverse {
+        flex-direction: row-reverse;
     }
 }
 </style>
