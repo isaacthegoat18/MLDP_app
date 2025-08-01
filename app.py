@@ -16,6 +16,51 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+.sidebar-toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    background-color: rgba(45, 55, 72, 0.9);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: none;
+}
+
+/* Show the toggle on smaller screens */
+@media screen and (max-width: 768px) {
+    .sidebar-toggle-btn {
+        display: block;
+    }
+    section[data-testid="stSidebar"] {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 999;
+    }
+    section[data-testid="stSidebar"].open {
+        transform: translateX(0);
+    }
+}
+
+/* Inside sidebar close button */
+.sidebar-close-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
 /* Make app container a flex row always so sidebar is visible */
 [data-testid="stAppViewContainer"] {
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
@@ -259,6 +304,27 @@ section[data-testid="stSidebar"]::-webkit-scrollbar-thumb {
     border-radius: 4px;
 }
 </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<button class="sidebar-toggle-btn" onclick="document.querySelector('section[data-testid=stSidebar]').classList.add('open')">☰</button>
+
+<script>
+    const closeBtn = document.createElement("button");
+    closeBtn.innerText = "Close Sidebar";
+    closeBtn.className = "sidebar-close-btn";
+    closeBtn.onclick = () => {
+        document.querySelector("section[data-testid=stSidebar]").classList.remove("open");
+    };
+
+    const sidebar = document.querySelector("section[data-testid=stSidebar]");
+    const interval = setInterval(() => {
+        const sb = document.querySelector("section[data-testid=stSidebar]");
+        if (sb && !sb.querySelector(".sidebar-close-btn")) {
+            sb.insertBefore(closeBtn, sb.firstChild);
+        }
+    }, 500);
+</script>
 """, unsafe_allow_html=True)
 
 
