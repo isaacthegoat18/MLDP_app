@@ -7,10 +7,9 @@ import time
 
 st.set_page_config(
     page_title="AI Job Salary Predictor",
-    layout="wide", 
+    layout="wide",
     initial_sidebar_state="expanded"
 )
-
 
 st.markdown("""
 <style>
@@ -18,7 +17,8 @@ st.markdown("""
 
 
 
-[data-testid="stAppViewContainer"] {
+data-testid="stAppViewContainer"] {
+    position: relative;
     background: url("https://www.aihr.com/wp-content/uploads/salary-benchmarking-cover-image.png") no-repeat center center fixed;
     background-size: cover;
     border-radius: 1rem;
@@ -26,41 +26,34 @@ st.markdown("""
     padding: 0;
     max-width: 1400px;
     min-height: calc(100vh - 4rem);
-    position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; right: 0; bottom: 0;
     backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0,0,0,0.7);
     z-index: -1;
+    border-radius: 1rem;
 }
 
-
-
-/* Main area */
-/*[data-testid="stAppViewContainer"] > .main {
-    padding: 0rem;
-    background-color: #2d3748;
-    border-radius: 0 0 1rem 1rem;
+section[data-testid="stSidebar"] {
+    z-index: 10 !important;
+    background-color: #111;
+    padding: 1rem;
+    color: white;
 }
-@media (min-width: 768px) {
-    [data-testid="stAppViewContainer"] > .main {
-        width: 55%;
-        border-radius: 0 1rem 1rem 0;
-    }
-}*/
-            
 
-/* Text and headers */
+/* Optional: color text and headers */
 h1, h2, h3, h4, h5, h6 {
     color: #0080ff;
+}
+
+/* Hide Streamlit header/footer */
+#MainMenu, footer, header {
+    visibility: hidden;
 }
 
 
